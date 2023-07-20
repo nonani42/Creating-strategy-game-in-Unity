@@ -8,7 +8,9 @@ namespace Core.CommandExecutors
     {
         public override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
-            Instantiate(command.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
+            GameObject parent = GameObject.Find("Units");
+            Transform parentTransform = (parent != null)? parent.transform : null;
+            Instantiate(command.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, parentTransform);
         }
     }
 }

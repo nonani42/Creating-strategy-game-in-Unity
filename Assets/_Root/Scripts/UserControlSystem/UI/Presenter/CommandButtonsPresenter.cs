@@ -49,13 +49,13 @@ namespace UserControlSystem.UI.Presenter
             if (commandExecutor is CommandExecutorBase<IProduceUnitCommand>)
             {
                 var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
-                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
+                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommandHeir()));
             }
 
             else if (commandExecutor is CommandExecutorBase<IAttackComand>)
             {
                 var unitProducer = commandExecutor as CommandExecutorBase<IAttackComand>;
-                unitProducer.ExecuteSpecificCommand(new AttackCommand());
+                unitProducer.ExecuteSpecificCommand(_context.Inject(new AttackCommand()));
             }
 
             else if (commandExecutor is CommandExecutorBase<IPatrolCommand>)
