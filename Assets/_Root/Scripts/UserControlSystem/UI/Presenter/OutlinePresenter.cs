@@ -20,7 +20,7 @@ public class OutlinePresenter : MonoBehaviour
 
         if (obj != null)
         {
-            _outline = obj.GameObject.TryGetComponent(out _outline) ? _outline : obj.GameObject.AddComponent<Outline>();
+            _outline = (obj as Component).TryGetComponent(out _outline) ? _outline : (obj as Component).gameObject.AddComponent<Outline>();
             _outline.enabled = obj != null;
         }
     }
