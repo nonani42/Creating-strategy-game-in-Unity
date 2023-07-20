@@ -1,7 +1,7 @@
 using Abstractions;
 using UnityEngine;
 
-public class Unit : MonoBehaviour, ISelectable
+public class MainUnit : MonoBehaviour, ISelectable
 {
     public float Health => _health;
     public float MaxHealth => _maxHealth;
