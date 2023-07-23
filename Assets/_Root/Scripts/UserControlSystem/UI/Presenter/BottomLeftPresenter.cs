@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UserControlSystem
 {
@@ -12,11 +13,12 @@ namespace UserControlSystem
         [SerializeField] private TMP_Text _text;
         [SerializeField] private Image _sliderBackground;
         [SerializeField] private Image _sliderFillImage;
-        [SerializeField] private SelectableValue _selectedValue;
+
+        [Inject] private ValueBase<ISelectable> _selectedValue;
 
         private void Start()
         {
-            _selectedValue.OnSelected += OnSelected;
+            _selectedValue.OnNewValue += OnSelected;
             OnSelected(_selectedValue.CurrentValue);
         }
 

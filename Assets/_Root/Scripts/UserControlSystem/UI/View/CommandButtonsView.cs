@@ -6,7 +6,7 @@ using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine.UI;
 using System.Linq;
 
-namespace UserControlSystem.UI.View
+namespace UserControlSystem
 {
     public class CommandButtonsView : MonoBehaviour
     {
@@ -24,7 +24,7 @@ namespace UserControlSystem.UI.View
         {
             _buttonsByExecutorType = new Dictionary<Type, GameObject>
             {
-                { typeof(CommandExecutorBase<IAttackComand>), _attackButton },
+                { typeof(CommandExecutorBase<IAttackCommand>), _attackButton },
                 { typeof(CommandExecutorBase<IMoveCommand>), _moveButton },
                 { typeof(CommandExecutorBase<IPatrolCommand>), _patrolButton },
                 { typeof(CommandExecutorBase<IStopCommand>), _stopButton },
@@ -38,7 +38,7 @@ namespace UserControlSystem.UI.View
         {
             foreach (var currentExecutor in commandExecutors)
             {
-                var buttonGameObject = _buttonsByExecutorType.Where(type => type.Key.IsAssignableFrom(currentExecutor.GetType())).First().Value;
+                var buttonGameObject = GetButtonGameObjectByType(currentExecutor.GetType());
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => OnClick?.Invoke(currentExecutor));
@@ -52,6 +52,28 @@ namespace UserControlSystem.UI.View
                 kvp.Value.GetComponent<Button>().onClick.RemoveAllListeners();
                 kvp.Value.SetActive(false);
             }
+        }
+
+        public void UnblockAllInteractions() => SetInteractable(true);
+
+        public void BlockInteractions(ICommandExecutor executor)
+        {
+            UnblockAllInteractions();
+            GetButtonGameObjectByType(executor.GetType()).GetComponent<Selectable>().interactable = false;
+        }
+
+        private void SetInteractable(bool value)
+        {
+            _attackButton.GetComponent<Selectable>().interactable = value;
+            _moveButton.GetComponent<Selectable>().interactable = value;
+            _patrolButton.GetComponent<Selectable>().interactable = value;
+            _stopButton.GetComponent<Selectable>().interactable = value;
+            _produceUnitButton.GetComponent<Selectable>().interactable = value;
+        }
+
+        private GameObject GetButtonGameObjectByType(Type executorInstanceType)
+        {
+            return _buttonsByExecutorType.Where(type => type.Key.IsAssignableFrom(executorInstanceType)).First().Value;
         }
     }
 }
