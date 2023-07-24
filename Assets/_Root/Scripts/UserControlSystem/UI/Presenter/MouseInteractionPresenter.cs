@@ -11,8 +11,8 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
 
     [Inject] private ValueBase<ISelectable> _selectedObject;
     [Inject] private ValueBase<IAttackable> _attackedObject;
-
     [Inject] private ValueBase<Vector3> _groundClicksRMB;
+
     [Inject(Id = "Ground")] private Transform _groundTransform;
 
 
