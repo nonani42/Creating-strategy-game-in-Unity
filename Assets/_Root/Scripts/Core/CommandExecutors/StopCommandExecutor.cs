@@ -1,14 +1,16 @@
 ﻿using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
-using UnityEngine;
+using System.Threading;
 
 namespace Core.CommandExecutors
 {
     public class StopCommandExecutor : CommandExecutorBase<IStopCommand>
     {
+        public CancellationTokenSource MoveCancellationTokenSource { get; set; }
+
         public override void ExecuteSpecificCommand(IStopCommand command)
         {
-            Debug.Log($"{command.GetType()}");
+            MoveCancellationTokenSource?.Cancel();
         }
     }
 }

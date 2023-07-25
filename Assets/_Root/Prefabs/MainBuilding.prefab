@@ -15,8 +15,8 @@ GameObject:
   m_Name: VegetationMedium01_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1976224694462161059
 Transform:
@@ -98,8 +98,8 @@ GameObject:
   m_Name: VegetationMedium01_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8992464405947467208
 Transform:
@@ -181,8 +181,8 @@ GameObject:
   m_Name: VegetationMedium01_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6547690625479515589
 Transform:
@@ -261,6 +261,8 @@ GameObject:
   - component: {fileID: 7804765425334093303}
   - component: {fileID: 322681738564468995}
   - component: {fileID: 6559389054077905866}
+  - component: {fileID: 3384380445708861363}
+  - component: {fileID: 5527339829156442939}
   m_Layer: 0
   m_Name: MainBuilding
   m_TagString: Untagged
@@ -334,3 +336,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def9f3155be441345bc1003656b039f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stopCommandExecutor: {fileID: 3384380445708861363}
+--- !u!114 &3384380445708861363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374537460086116247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8afe0bc603a892c4384b502980c395d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5527339829156442939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374537460086116247}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.87809193, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

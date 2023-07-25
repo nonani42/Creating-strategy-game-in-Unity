@@ -9,7 +9,7 @@ namespace UserControlSystem.CommandRealizations
 
         public Vector3 To { get; }
 
-        public PatrolCommand(Vector3 from, Vector3 to) 
+        public PatrolCommand(Vector3 from, Vector3 to)
         {
             From = from;
             To = to;

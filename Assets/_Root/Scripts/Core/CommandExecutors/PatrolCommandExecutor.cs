@@ -6,9 +6,11 @@ namespace Core.CommandExecutors
 {
     public class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
     {
+        [SerializeField] private StopCommandExecutor _stopCommandExecutor;
+
+
         public override void ExecuteSpecificCommand(IPatrolCommand command)
         {
-            Debug.Log($"{name} patrols from {command.From} to {command.To}");
         }
     }
 }

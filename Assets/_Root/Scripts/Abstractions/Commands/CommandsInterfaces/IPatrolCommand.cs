@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 namespace Abstractions.Commands.CommandsInterfaces
 {
     public interface IPatrolCommand : ICommand
     {
-        public Vector3 From { get; }
-        public Vector3 To { get; }
+        Vector3 From { get; }
+        Vector3 To { get; }
     }
 }

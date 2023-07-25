@@ -1,7 +1,9 @@
+using System.Threading;
+
 namespace Abstractions.Commands.CommandsInterfaces
 {
     public interface IAttackCommand : ICommand
     {
-        public IAttackable Target { get; }
+        IAttackable Target { get; }
     }
 }

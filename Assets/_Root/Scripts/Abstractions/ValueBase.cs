@@ -5,39 +5,23 @@ namespace Abstractions
 {
     public abstract class ValueBase<T> : IAwaitable<T>
     {
-        public class NewValueNotifier<TAwaited> : IAwaiter<TAwaited>
+        public class NewValueNotifier<TAwaited> : AwaiterBase<TAwaited>
         {
-            private readonly ValueBase<TAwaited> _valueBase;
-            private TAwaited _result;
-            private Action _continuation;
-            private bool _isCompleted;
+            protected readonly ValueBase<TAwaited> _valueBase;
 
-            public NewValueNotifier(ValueBase<TAwaited> scriptableObjectValueBase)
+            public NewValueNotifier(ValueBase<TAwaited> valueBase)
             {
-                _valueBase = scriptableObjectValueBase;
-                _valueBase.OnNewValue += onNewValue;
+                _valueBase = valueBase;
+                _valueBase.OnNewValue += OnChangeValue;
             }
 
-            private void onNewValue(TAwaited obj)
+            public void OnChangeValue(TAwaited obj)
             {
-                _valueBase.OnNewValue -= onNewValue;
-                _result = obj;
-                _isCompleted = true;
-                _continuation?.Invoke();
+                _valueBase.OnNewValue -= OnChangeValue;
+                OnNewValue(obj);
             }
-
-            public void OnCompleted(Action continuation)
-            {
-                if (_isCompleted)
-                    continuation?.Invoke();
-                else
-                    _continuation = continuation;
-            }
-
-            public bool IsCompleted => _isCompleted;
-            public TAwaited GetResult() => _result;
         }
-
+            
         public T CurrentValue { get; private set; }
 
         public event Action<T> OnNewValue;

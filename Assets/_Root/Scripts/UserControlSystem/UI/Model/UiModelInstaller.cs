@@ -1,6 +1,7 @@
 ﻿using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using System.Threading;
 using UnityEngine;
 using Utils;
 using Zenject;
@@ -14,6 +15,7 @@ namespace UserControlSystem
 
         private AttackableValue _attackableValue;
         private Vector3Value _vector3Value;
+
 
         public override void InstallBindings()
         {
@@ -30,7 +32,6 @@ namespace UserControlSystem
 
             Container.Bind<IAwaitable<IAttackable>>().FromInstance(_attackableValue);
             Container.Bind<IAwaitable<Vector3>>().FromInstance(_vector3Value);
-
 
             Container.Bind<CommandCreatorBase<IProduceUnitCommand>>().To<ProduceUnitCommandCommandCreator>().AsSingle();
 

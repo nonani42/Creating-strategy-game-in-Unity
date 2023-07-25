@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Abstractions;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -7,40 +8,26 @@ namespace Core
 {
     public class UnitMovementStop : MonoBehaviour, IAwaitable<AsyncExtensions.Void>
     {
-        public class StopAwaiter : IAwaiter<AsyncExtensions.Void>
+        public class StopAwaiter : AwaiterBase<AsyncExtensions.Void>
         {
-            private readonly UnitMovementStop _unitMovementStop;
-            private Action _continuation;
-            private bool _isCompleted;
-            public StopAwaiter(UnitMovementStop unitMovementStop)
+            protected readonly UnitMovementStop _unitStop;
+
+            public StopAwaiter(UnitMovementStop unitStop)
             {
-                _unitMovementStop = unitMovementStop;
-                _unitMovementStop.OnStop += OnStop;
+                _unitStop = unitStop;
+                _unitStop.OnStop += OnStop;
             }
-            private void OnStop()
+
+            public void OnStop()
             {
-                _unitMovementStop.OnStop -= OnStop;
-                _isCompleted = true;
-                _continuation?.Invoke();
+                _unitStop.OnStop -= OnStop;
+                OnNewValue(new AsyncExtensions.Void());
             }
-            public void OnCompleted(Action continuation)
-            {
-                if (_isCompleted)
-                {
-                    continuation?.Invoke();
-                }
-                else
-                {
-                    _continuation = continuation;
-                }
-            }
-            public bool IsCompleted => _isCompleted;
-            public AsyncExtensions.Void GetResult() => new AsyncExtensions.Void();
-        }
-        
-        public event Action OnStop;
+        }            
 
         [SerializeField] private NavMeshAgent _agent;
+
+        public event Action OnStop;
 
         void Update()
         {
