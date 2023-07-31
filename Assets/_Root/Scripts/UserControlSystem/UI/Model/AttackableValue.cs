@@ -1,3 +1,3 @@
 ﻿using Abstractions;
 
-public class AttackableValue : ValueBase<IAttackable> { }
+public class AttackableValue : StatelessValueBase<IAttackable> { }

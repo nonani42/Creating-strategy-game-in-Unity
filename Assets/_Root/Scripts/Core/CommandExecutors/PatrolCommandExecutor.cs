@@ -32,6 +32,7 @@ namespace Core.CommandExecutors
             _patrolPoints[1] = command.To;
 
             _navMesh = GetComponent<NavMeshAgent>();
+            _navMesh.isStopped = false;
             ChangeDestination();
 
             _stopCommandExecutor.PatrolCancellationTokenSource = new CancellationTokenSource();

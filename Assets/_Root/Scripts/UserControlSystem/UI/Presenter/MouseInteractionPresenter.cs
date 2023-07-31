@@ -1,5 +1,6 @@
 using Abstractions;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -24,33 +25,35 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     private void Start()
     {
         _groundPlane = new Plane(_groundTransform.up, 0);
-    }
 
-    private void Update()
-    {
-        if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButtonUp(1))
-            return;
+        var notBlockedByUiClicksStream = Observable.EveryUpdate().Where(_ => !_eventSystem.IsPointerOverGameObject());
 
-        if (_eventSystem.IsPointerOverGameObject())
-            return;
+        var leftclickRaysObservable = notBlockedByUiClicksStream.
+            Where(_ => Input.GetMouseButtonDown(leftMB)).
+            Select(_ =>_camera.ScreenPointToRay(Input.mousePosition)).
+            Select(ray => Physics.RaycastAll(ray));
 
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        var hits = Physics.RaycastAll(ray);
-
-        if (Input.GetMouseButtonUp(leftMB))
+        leftclickRaysObservable.Subscribe(hits =>
         {
-            if(CheckHits(hits, out ISelectable selectable))
+            if (CheckHits(hits, out ISelectable selectable))
                 _selectedObject.SetValue(selectable);
-        }
+        });
 
-        if (Input.GetMouseButtonUp(rightMB))
+        var rightClickRaysObservable = notBlockedByUiClicksStream.
+            Where(_ => Input.GetMouseButtonDown(rightMB)).
+            Select(_ =>_camera.ScreenPointToRay(Input.mousePosition)).
+            Select(ray => (ray, Physics.RaycastAll(ray)));
+
+        rightClickRaysObservable.Subscribe(cortege =>
         {
+            var (ray, hits) = cortege;
+
             if (_groundPlane.Raycast(ray, out var enter))
                 _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
 
             if (CheckHits(hits, out IAttackable selectable))
                 _attackedObject.SetValue(selectable);
-        }
+        });
     }
 
     private bool CheckHits<T>(RaycastHit[] hits, out T result) where T : class

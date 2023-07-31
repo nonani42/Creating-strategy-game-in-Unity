@@ -1,3 +1,3 @@
 ﻿using Abstractions;
 
-public class SelectableValue : ValueBase<ISelectable> { }
+public class SelectableValue : StatefulValueBase<ISelectable> { }

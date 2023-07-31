@@ -20,6 +20,7 @@ namespace Core.CommandExecutors
         public override async void ExecuteSpecificCommand(IMoveCommand command)
         {
             _navMesh = GetComponent<NavMeshAgent>();
+            _navMesh.isStopped = false;
             _navMesh.destination = command.Target;
 
             _stopCommandExecutor.MoveCancellationTokenSource = new CancellationTokenSource();

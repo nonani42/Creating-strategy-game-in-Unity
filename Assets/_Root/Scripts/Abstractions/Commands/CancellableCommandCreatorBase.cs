@@ -8,7 +8,7 @@ namespace Abstractions.Commands
     public abstract class CancellableCommandCreatorBase<TCommand, TArgument> : CommandCreatorBase<TCommand> where TCommand : ICommand
     {
         [Inject] private AssetsContext _context;
-        [Inject] private IAwaitable<TArgument> _awaitableArgument;
+        [Inject] private ValueBase<TArgument> _awaitableArgument;
 
         private CancellationTokenSource _ctSource;
 

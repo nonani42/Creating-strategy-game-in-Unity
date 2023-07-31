@@ -1,7 +1,7 @@
 ﻿using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
-using System.Threading;
+using System;
 using UnityEngine;
 using Utils;
 using Zenject;
@@ -13,25 +13,24 @@ namespace UserControlSystem
         [SerializeField] private Transform _groundTransform;
         private string _groundTransformId = "Ground";
 
-        private AttackableValue _attackableValue;
-        private Vector3Value _vector3Value;
-
-
         public override void InstallBindings()
         {
             Container.Bind<Transform>().WithId(_groundTransformId).FromInstance(_groundTransform);
 
-            Container.Bind<ValueBase<ISelectable>>().To<SelectableValue>().AsSingle();
+            Container.Bind(
+                typeof(IObservable<ISelectable>),
+                typeof(ValueBase<ISelectable>)).
+                To<SelectableValue>().AsSingle();
 
-            _attackableValue = new AttackableValue();
-            Container.Bind<ValueBase<IAttackable>>().FromInstance(_attackableValue);
+            Container.Bind(
+                //typeof(IAwaitable<IAttackable>),
+                typeof(ValueBase<IAttackable>)).
+                To<AttackableValue>().AsSingle();
 
-            _vector3Value = new Vector3Value();
-            Container.Bind<ValueBase<Vector3>>().FromInstance(_vector3Value);
-
-
-            Container.Bind<IAwaitable<IAttackable>>().FromInstance(_attackableValue);
-            Container.Bind<IAwaitable<Vector3>>().FromInstance(_vector3Value);
+            Container.Bind(
+                //typeof(IAwaitable<Vector3>),
+                typeof(ValueBase<Vector3>)).
+                To<Vector3Value>().AsSingle();
 
             Container.Bind<CommandCreatorBase<IProduceUnitCommand>>().To<ProduceUnitCommandCommandCreator>().AsSingle();
 
