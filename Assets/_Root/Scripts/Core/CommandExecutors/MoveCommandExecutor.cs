@@ -11,7 +11,7 @@ namespace Core.CommandExecutors
     {
         [SerializeField] private UnitMovementStop _stop;
         [SerializeField] private Animator _animator;
-        [SerializeField] private NavMeshAgent navMesh;
+        [SerializeField] private NavMeshAgent _navMesh;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
 
         private readonly int Walk = Animator.StringToHash("Walk");
@@ -19,8 +19,8 @@ namespace Core.CommandExecutors
 
         public override async void ExecuteSpecificCommand(IMoveCommand command)
         {
-            navMesh = GetComponent<NavMeshAgent>();
-            navMesh.destination = command.Target;
+            _navMesh = GetComponent<NavMeshAgent>();
+            _navMesh.destination = command.Target;
 
             _stopCommandExecutor.MoveCancellationTokenSource = new CancellationTokenSource();
 
@@ -33,7 +33,8 @@ namespace Core.CommandExecutors
 
             catch
             {
-                navMesh.destination = gameObject.transform.position;
+                _navMesh.isStopped = true;
+                _navMesh.ResetPath();
                 _animator.SetTrigger(Idle);
             }
         }
