@@ -1,6 +1,7 @@
 ﻿using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -17,7 +18,7 @@ namespace Core.CommandExecutors
         private readonly int Walk = Animator.StringToHash("Walk");
         private readonly int Idle = Animator.StringToHash("Idle");
 
-        public override async void ExecuteSpecificCommand(IMoveCommand command)
+        public override async Task ExecuteSpecificCommand(IMoveCommand command)
         {
             _navMesh = GetComponent<NavMeshAgent>();
             _navMesh.isStopped = false;

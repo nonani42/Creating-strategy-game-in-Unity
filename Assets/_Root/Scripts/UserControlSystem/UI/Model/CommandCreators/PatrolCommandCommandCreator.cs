@@ -11,6 +11,6 @@ namespace UserControlSystem
     {
         [Inject] private ValueBase<ISelectable> _selectable;
 
-        protected override IPatrolCommand СreateCommand(Vector3 argument) => new PatrolCommand(_selectable.CurrentValue.Position.position, argument);
+        protected override IPatrolCommand CreateCommand(Vector3 argument) => new PatrolCommand(_selectable.CurrentValue.Position.position, argument);
     }
 }

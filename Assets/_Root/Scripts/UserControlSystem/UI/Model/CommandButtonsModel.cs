@@ -2,6 +2,8 @@
 using Abstractions.Commands;
 using System;
 using Zenject;
+using Abstractions;
+using UnityEngine;
 
 namespace UserControlSystem
 {
@@ -16,10 +18,11 @@ namespace UserControlSystem
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
+        [Inject] private CommandCreatorBase<ISetRallyPointCommand> _rallySetter;
 
         private bool _commandIsPending;
 
-        public void OnCommandButtonClicked(ICommandExecutor commandExecutor)
+        public void OnCommandButtonClicked(ICommandExecutor commandExecutor, ICommandsQueue commandsQueue)
         {
             if (_commandIsPending)
             {
@@ -30,24 +33,30 @@ namespace UserControlSystem
             OnCommandAccepted?.Invoke(commandExecutor);
 
             _unitProducer.ProcessCommandExecutor(commandExecutor, command =>
-                ExecuteCommandWrapper(commandExecutor, command));
+                ExecuteCommandWrapper(command, commandsQueue));
 
             _attacker.ProcessCommandExecutor(commandExecutor, command =>
-                ExecuteCommandWrapper(commandExecutor, command));
+                ExecuteCommandWrapper(command, commandsQueue));
 
             _stopper.ProcessCommandExecutor(commandExecutor, command =>
-                ExecuteCommandWrapper(commandExecutor, command));
+                ExecuteCommandWrapper(command, commandsQueue));
 
             _mover.ProcessCommandExecutor(commandExecutor, command =>
-                ExecuteCommandWrapper(commandExecutor, command));
+                ExecuteCommandWrapper(command, commandsQueue));
 
             _patroller.ProcessCommandExecutor(commandExecutor, command =>
-                ExecuteCommandWrapper(commandExecutor, command));
+                ExecuteCommandWrapper(command, commandsQueue));
+
+            _rallySetter.ProcessCommandExecutor(commandExecutor, command =>
+                ExecuteCommandWrapper(command, commandsQueue));
         }
 
-        public void ExecuteCommandWrapper(ICommandExecutor commandExecutor, object command)
+        public void ExecuteCommandWrapper(object command, ICommandsQueue commandsQueue)
         {
-            commandExecutor.ExecuteCommand(command);
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+                commandsQueue.Clear();
+
+            commandsQueue.EnqueueCommand(command);
             _commandIsPending = false;
             OnCommandSent?.Invoke();
         }
@@ -65,6 +74,7 @@ namespace UserControlSystem
             _stopper.ProcessCancel();
             _mover.ProcessCancel();
             _patroller.ProcessCancel();
+            _rallySetter.ProcessCancel();
             OnCommandCancel?.Invoke();
         }
     }

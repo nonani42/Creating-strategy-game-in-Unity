@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 using Utils;
 
 namespace Core.CommandExecutors
@@ -26,7 +25,7 @@ namespace Core.CommandExecutors
 
         private bool _isMoving = false;
 
-        public async override void ExecuteSpecificCommand(IPatrolCommand command)
+        public override async Task ExecuteSpecificCommand(IPatrolCommand command)
         {
             _patrolPoints[0] = command.From;
             _patrolPoints[1] = command.To;

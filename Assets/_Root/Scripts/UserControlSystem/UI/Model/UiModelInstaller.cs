@@ -30,6 +30,7 @@ namespace UserControlSystem
             Container.Bind<CommandCreatorBase<IMoveCommand>>().To<MoveCommandCommandCreator>().AsSingle();
             Container.Bind<CommandCreatorBase<IPatrolCommand>>().To<PatrolCommandCommandCreator>().AsSingle();
             Container.Bind<CommandCreatorBase<IStopCommand>>().To<StopCommandCommandCreator>().AsSingle();
+            Container.Bind<CommandCreatorBase<ISetRallyPointCommand>>().To<SetRallyPointCommandCreator>().AsSingle();
 
             Container.Bind<CommandButtonsModel>().AsSingle();
             Container.Bind<BottomCenterModel>().AsSingle();

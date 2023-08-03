@@ -1,6 +1,7 @@
 ﻿using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Core.CommandExecutors
 {
@@ -9,7 +10,7 @@ namespace Core.CommandExecutors
         public CancellationTokenSource MoveCancellationTokenSource { get; set; }
         public CancellationTokenSource PatrolCancellationTokenSource { get; set; }
 
-        public override void ExecuteSpecificCommand(IStopCommand command)
+        public override async Task ExecuteSpecificCommand(IStopCommand command)
         {
             MoveCancellationTokenSource?.Cancel();
             PatrolCancellationTokenSource?.Cancel();

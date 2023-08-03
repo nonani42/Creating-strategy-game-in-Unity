@@ -1,5 +1,6 @@
 ﻿using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.CommandExecutors
@@ -8,7 +9,7 @@ namespace Core.CommandExecutors
     {
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
 
-        public override void ExecuteSpecificCommand(IAttackCommand command)
+        public override async Task ExecuteSpecificCommand(IAttackCommand command)
         {
             Debug.Log($"{name} attacks {command.Target}");
         }

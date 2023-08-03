@@ -5,18 +5,20 @@ using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine.UI;
 using System.Linq;
+using Abstractions;
 
 namespace UserControlSystem
 {
     public class CommandButtonsView : MonoBehaviour
     {
-        public Action<ICommandExecutor> OnClick;
+        public Action<ICommandExecutor, ICommandsQueue> OnClick;
 
         [SerializeField] private GameObject _attackButton;
         [SerializeField] private GameObject _moveButton;
         [SerializeField] private GameObject _patrolButton;
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
+        [SerializeField] private GameObject _setRallyButton;
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
 
@@ -24,24 +26,25 @@ namespace UserControlSystem
         {
             _buttonsByExecutorType = new Dictionary<Type, GameObject>
             {
-                { typeof(CommandExecutorBase<IAttackCommand>), _attackButton },
-                { typeof(CommandExecutorBase<IMoveCommand>), _moveButton },
-                { typeof(CommandExecutorBase<IPatrolCommand>), _patrolButton },
-                { typeof(CommandExecutorBase<IStopCommand>), _stopButton },
-                { typeof(CommandExecutorBase<IProduceUnitCommand>), _produceUnitButton }
+                { typeof(ICommandExecutor<IAttackCommand>), _attackButton },
+                { typeof(ICommandExecutor<IMoveCommand>), _moveButton },
+                { typeof(ICommandExecutor<IPatrolCommand>), _patrolButton },
+                { typeof(ICommandExecutor<IStopCommand>), _stopButton },
+                { typeof(ICommandExecutor<IProduceUnitCommand>), _produceUnitButton },
+                { typeof(ICommandExecutor<ISetRallyPointCommand>), _setRallyButton }
             };
 
             Clear();
         }
 
-        public void MakeLayout(List<ICommandExecutor> commandExecutors)
+        public void MakeLayout(List<ICommandExecutor> commandExecutors, ICommandsQueue queue)
         {
             foreach (var currentExecutor in commandExecutors)
             {
                 var buttonGameObject = GetButtonGameObjectByType(currentExecutor.GetType());
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClick?.Invoke(currentExecutor));
+                button.onClick.AddListener(() => OnClick?.Invoke(currentExecutor, queue));
             }
         }
 
@@ -69,6 +72,7 @@ namespace UserControlSystem
             _patrolButton.GetComponent<Selectable>().interactable = value;
             _stopButton.GetComponent<Selectable>().interactable = value;
             _produceUnitButton.GetComponent<Selectable>().interactable = value;
+            _setRallyButton.GetComponent<Selectable>().interactable = value;
         }
 
         private GameObject GetButtonGameObjectByType(Type executorInstanceType)

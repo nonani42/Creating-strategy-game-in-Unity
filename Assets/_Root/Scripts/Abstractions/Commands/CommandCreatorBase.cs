@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 
 namespace Abstractions.Commands
 {
@@ -8,7 +7,7 @@ namespace Abstractions.Commands
 
         public ICommandExecutor ProcessCommandExecutor(ICommandExecutor commandExecutor, Action<T> callback)
         {
-            var classSpecificExecutor = commandExecutor as CommandExecutorBase<T>;
+            var classSpecificExecutor = commandExecutor as ICommandExecutor<T>;
             if (classSpecificExecutor != null)
             {
                 ClassSpecificCommandCreation(callback);

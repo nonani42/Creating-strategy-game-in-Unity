@@ -7,6 +7,6 @@ namespace UserControlSystem
 {
     public class MoveCommandCommandCreator : CancellableCommandCreatorBase<IMoveCommand, Vector3>
     {
-        protected override IMoveCommand ÑreateCommand(Vector3 argument) => new MoveCommand(argument);
+        protected override IMoveCommand CreateCommand(Vector3 argument) => new MoveCommand(argument);
     }
 }

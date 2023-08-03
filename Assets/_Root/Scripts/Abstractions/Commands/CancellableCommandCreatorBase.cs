@@ -19,13 +19,13 @@ namespace Abstractions.Commands
             try
             {
                 var argument = await _awaitableArgument.WithCancellation(_ctSource.Token);
-                creationCallback?.Invoke(_context.Inject(СreateCommand(argument)));
+                creationCallback?.Invoke(_context.Inject(CreateCommand(argument)));
             }
 
             catch { }
         }
 
-        protected abstract TCommand СreateCommand(TArgument argument);
+        protected abstract TCommand CreateCommand(TArgument argument);
 
         public override void ProcessCancel()
         {
