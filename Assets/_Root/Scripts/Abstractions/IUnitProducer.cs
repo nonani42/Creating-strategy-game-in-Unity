@@ -1,7 +1,11 @@
-﻿namespace Abstractions
+﻿using UniRx;
+
+namespace Abstractions
 {
     public interface IUnitProducer
     {
-        void ProduceUnit();
+        IReadOnlyReactiveCollection<IUnitProductionTask> Queue { get; }
+
+        public void Cancel(int index);
     }
 }

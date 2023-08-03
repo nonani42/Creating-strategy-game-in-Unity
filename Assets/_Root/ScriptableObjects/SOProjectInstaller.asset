@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SOProjectInstaller
   m_EditorClassIdentifier: 
   _legacyContext: {fileID: 11400000, guid: ad7907d3bc2f2c649851b988cbd6a473, type: 2}
+  _chomperSprite: {fileID: 21300000, guid: 8daa9ab94b940144984026c0246926b0, type: 3}

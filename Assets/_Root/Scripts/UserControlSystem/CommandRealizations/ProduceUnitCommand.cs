@@ -1,13 +1,19 @@
 ﻿using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 using Utils;
+using Zenject;
 
 namespace UserControlSystem.CommandRealizations
 {
     public class ProduceUnitCommand : IProduceUnitCommand
     {
-        [InjectAsset("Chomper")] private GameObject _unitPrefab;
+        [Inject(Id = "Chomper")] public string UnitName { get; }
+        [Inject(Id = "Chomper")] public Sprite Icon { get; }
+        [Inject(Id = "Chomper")] public float ProductionTime { get; }
+
         public GameObject UnitPrefab => _unitPrefab;
+
+        [InjectAsset("Chomper")] private GameObject _unitPrefab;
     }
 
     public sealed class ProduceUnitCommandHeir : ProduceUnitCommand

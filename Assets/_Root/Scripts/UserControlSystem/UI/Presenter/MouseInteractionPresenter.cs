@@ -4,6 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
+using Utils;
 
 public sealed class MouseInteractionPresenter : MonoBehaviour
 {
@@ -37,23 +38,21 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
         {
             if (CheckHits(hits, out ISelectable selectable))
                 _selectedObject.SetValue(selectable);
-        });
+        }).AddTo(this);
 
         var rightClickRaysObservable = notBlockedByUiClicksStream.
             Where(_ => Input.GetMouseButtonDown(rightMB)).
             Select(_ =>_camera.ScreenPointToRay(Input.mousePosition)).
             Select(ray => (ray, Physics.RaycastAll(ray)));
 
-        rightClickRaysObservable.Subscribe(cortege =>
+        rightClickRaysObservable.Subscribe((ray, hits) =>
         {
-            var (ray, hits) = cortege;
-
             if (_groundPlane.Raycast(ray, out var enter))
                 _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
 
             if (CheckHits(hits, out IAttackable selectable))
                 _attackedObject.SetValue(selectable);
-        });
+        }).AddTo(this);
     }
 
     private bool CheckHits<T>(RaycastHit[] hits, out T result) where T : class

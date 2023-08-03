@@ -21,11 +21,11 @@ namespace UserControlSystem.UI.Presenter
             {
                 var t = TimeSpan.FromSeconds(seconds);
                 _inputField.text = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
-            });
+            }).AddTo(this);
 
             _menuGo.SetActive(false);
 
-            _menuButton.OnClickAsObservable().Subscribe(_ => _menuGo.SetActive(true));
+            _menuButton.OnClickAsObservable().Subscribe(_ => _menuGo.SetActive(true)).AddTo(this);
         }
     }
 }
