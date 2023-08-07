@@ -9,11 +9,13 @@ namespace Core.CommandExecutors
     {
         public CancellationTokenSource MoveCancellationTokenSource { get; set; }
         public CancellationTokenSource PatrolCancellationTokenSource { get; set; }
+        public CancellationTokenSource AttackCancellationTokenSource { get; set; }
 
         public override async Task ExecuteSpecificCommand(IStopCommand command)
         {
             MoveCancellationTokenSource?.Cancel();
             PatrolCancellationTokenSource?.Cancel();
+            AttackCancellationTokenSource?.Cancel();
         }
     }
 }

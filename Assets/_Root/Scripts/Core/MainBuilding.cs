@@ -15,4 +15,15 @@ public class MainBuilding : MonoBehaviour, ISelectable, IAttackable
     [SerializeField] private Transform _transform;
 
     private float _health = 1000f;
+
+    public void RecieveDamage(int amount)
+    {
+        if (_health <= 0)
+            return;
+
+        _health -= amount;
+
+        if (_health <= 0)
+            Destroy(gameObject);
+    }
 }

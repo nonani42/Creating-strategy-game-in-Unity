@@ -1,5 +1,7 @@
-﻿
-namespace Abstractions
+﻿namespace Abstractions
 {
-    public interface IAttackable : IHealthHolder { }
+    public interface IAttackable : IHealthHolder
+    {
+        void RecieveDamage(int amount);
+    }
 }

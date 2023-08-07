@@ -37,6 +37,10 @@ namespace Core.CommandExecutors
                 RemoveTaskAtIndex(0);
                 Vector3 point = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + 2);
                 var instance = _diContainer.InstantiatePrefab(innerTask.UnitPrefab, point, Quaternion.identity, _parent);
+
+                var factionMember = instance.GetComponent<FactionMember>();
+                factionMember.SetFaction(GetComponent<FactionMember>().FactionId);
+
                 var queue = instance.GetComponent<ICommandsQueue>();
                 var mainBuilding = GetComponent<MainBuilding>();
 
