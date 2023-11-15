@@ -29,7 +29,7 @@ namespace Core.CommandExecutors
             try
             {
                 _animator.SetTrigger(Walk);
-                await _stop.WithCancellation(_stopCommandExecutor.MoveCancellationTokenSource.Token);
+                await _stop.RunWithCancellation(_stopCommandExecutor.MoveCancellationTokenSource.Token);
                 _animator.SetTrigger(Idle);
             }
 

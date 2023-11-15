@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using System;
 
 namespace Core.CommandExecutors
 {
@@ -18,8 +19,13 @@ namespace Core.CommandExecutors
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
         [Inject] private DiContainer _diContainer;
 
+        private System.Random rnd = new System.Random();
+
         public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
         {
+            if (_queue.Count == _maximumUnitsInQueue)
+                return;
+
             _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
         }
 
@@ -35,7 +41,7 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                Vector3 point = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + 2);
+                Vector3 point = new Vector3(transform.position.x + rnd.Next(-10, -5), transform.position.y, transform.position.z + rnd.Next(-10, -5));
                 var instance = _diContainer.InstantiatePrefab(innerTask.UnitPrefab, point, Quaternion.identity, _parent);
 
                 var factionMember = instance.GetComponent<FactionMember>();

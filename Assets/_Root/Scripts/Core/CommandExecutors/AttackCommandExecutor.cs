@@ -86,7 +86,7 @@ namespace Core.CommandExecutors
             try
             {
                 await
-                _currentAttackOp.WithCancellation(_stopCommandExecutor.AttackCancellationTokenSource.Token);
+                _currentAttackOp.RunWithCancellation(_stopCommandExecutor.AttackCancellationTokenSource.Token);
             }
             catch
             {

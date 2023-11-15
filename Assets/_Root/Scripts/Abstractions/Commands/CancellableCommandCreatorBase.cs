@@ -18,7 +18,7 @@ namespace Abstractions.Commands
 
             try
             {
-                var argument = await _awaitableArgument.WithCancellation(_ctSource.Token);
+                var argument = await _awaitableArgument.RunWithCancellation(_ctSource.Token);
                 creationCallback?.Invoke(_context.Inject(CreateCommand(argument)));
             }
 

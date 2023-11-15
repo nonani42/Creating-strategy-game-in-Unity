@@ -43,7 +43,7 @@ namespace Core.CommandExecutors
                 try
                 {
                     _animator.SetTrigger(Walk);
-                    await _stop.WithCancellation(_stopCommandExecutor.PatrolCancellationTokenSource.Token);
+                    await _stop.RunWithCancellation(_stopCommandExecutor.PatrolCancellationTokenSource.Token);
                     _animator.SetTrigger(Idle);
                     await Task.Delay(500);
                     ChangeDestination();
