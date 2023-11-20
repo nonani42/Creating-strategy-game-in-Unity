@@ -49,18 +49,18 @@ namespace Core.CommandExecutors
             .Subscribe(StartMovingToPosition);
             _attackTargets
             .ObserveOnMainThread()
-            .Subscribe(startAttackingTargets);
+            .Subscribe(StartAttackingTargets);
             _targetRotations
             .ObserveOnMainThread()
-            .Subscribe(setAttackRoation);
+            .Subscribe(SetAttackRotation);
         }
 
-        private void setAttackRoation(Quaternion targetRotation)
+        private void SetAttackRotation(Quaternion targetRotation)
         {
             transform.rotation = targetRotation;
         }
 
-        private void startAttackingTargets(IAttackable target)
+        private void StartAttackingTargets(IAttackable target)
         {
             GetComponent<NavMeshAgent>().isStopped = true;
             GetComponent<NavMeshAgent>().ResetPath();
@@ -79,7 +79,7 @@ namespace Core.CommandExecutors
             _targetTransform = (command.Target as Component).transform;
             _currentAttackOp = new AttackOperation(this, command.Target);
 
-            Update();
+            //Update();
 
             _stopCommandExecutor.AttackCancellationTokenSource = new CancellationTokenSource();
 
@@ -106,15 +106,10 @@ namespace Core.CommandExecutors
                 return;
             }
 
-            lock (this)
-            {
-                _ourPosition = transform.position;
-                _ourRotation = transform.rotation;
-                if (_targetTransform != null)
-                {
-                    _targetPosition = _targetTransform.position;
-                }
-            }
+            _ourPosition = transform.position;
+            _ourRotation = transform.rotation;
+            if (_targetTransform != null)
+                _targetPosition = _targetTransform.position;
         }
     }
 }

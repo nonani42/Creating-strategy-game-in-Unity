@@ -30,6 +30,8 @@ namespace Core.CommandExecutors
             {
                 _animator.SetTrigger(Walk);
                 await _stop.RunWithCancellation(_stopCommandExecutor.MoveCancellationTokenSource.Token);
+                _navMesh.isStopped = true;
+                _navMesh.ResetPath();
                 _animator.SetTrigger(Idle);
             }
 

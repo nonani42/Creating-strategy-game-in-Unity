@@ -24,7 +24,7 @@ namespace Core
                 _unitStop.OnStop -= OnStop;
                 OnNewValue(new AsyncExtensions.Void());
             }
-        }            
+        }
 
         public event Action OnStop;
 
@@ -54,7 +54,6 @@ namespace Core
                 {
                     _agent.isStopped = true;
                     _agent.ResetPath();
-                    Debug.Log("Here!");
                     OnStop?.Invoke();
                 }).
                 AddTo(this);

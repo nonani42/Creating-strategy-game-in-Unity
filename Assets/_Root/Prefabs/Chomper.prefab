@@ -2517,6 +2517,9 @@ GameObject:
   - component: {fileID: 8446025489888824126}
   - component: {fileID: 6211614224324083382}
   - component: {fileID: 8442884478243250943}
+  - component: {fileID: 6706590443174135272}
+  - component: {fileID: 6577380843764510861}
+  - component: {fileID: 2311046471072280234}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Untagged
@@ -2596,7 +2599,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 0
-  m_AngularSpeed: 360
+  m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2621,6 +2624,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 8daa9ab94b940144984026c0246926b0, type: 3}
   _transform: {fileID: 4635218288078028763}
   _damage: 25
+  _visionRadius: 8
   _animator: {fileID: 2934867709578207790}
   _stopCommand: {fileID: 4631681165408960955}
 --- !u!114 &870300349421009202
@@ -2804,6 +2808,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4846379e8157934ebfa4c2db327acf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackerParallelnfoUpdater: {fileID: 6577380843764510861}
+  _factionMemberParallelInfoUpdater: {fileID: 6706590443174135272}
+--- !u!114 &6706590443174135272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924784796882875032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb20bb6931b7374a8a5643c98d22cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6577380843764510861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924784796882875032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed73ddd9caf00e49a87b44689533cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2311046471072280234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924784796882875032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7e558a353871140aac890f6edac9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _queue: {fileID: 6799679930631397665}
 --- !u!1 &7018943841994461213
 GameObject:
   m_ObjectHideFlags: 0

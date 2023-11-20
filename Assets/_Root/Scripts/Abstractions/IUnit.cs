@@ -1,6 +1,6 @@
-﻿namespace Core
+﻿namespace Abstractions
 {
-    internal interface IUnit
+    public interface IUnit
     {
     }
 }
