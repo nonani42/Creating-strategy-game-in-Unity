@@ -26,7 +26,7 @@ namespace UserControlSystem
             Container.Bind(typeof(ValueBase<Vector3>)).To<Vector3Value>().AsSingle();
 
             Container.Bind<CommandCreatorBase<IProduceUnitCommand>>().To<ProduceUnitCommandCommandCreator>().AsSingle();
-            Container.Bind<CommandCreatorBase<IAttackCommand>>().To<AttackCommandCommandCreator>().AsSingle();
+            Container.Bind<CommandCreatorBase<IHealCommand>>().To<AttackCommandCommandCreator>().AsSingle();
             Container.Bind<CommandCreatorBase<IMoveCommand>>().To<MoveCommandCommandCreator>().AsSingle();
             Container.Bind<CommandCreatorBase<IPatrolCommand>>().To<PatrolCommandCommandCreator>().AsSingle();
             Container.Bind<CommandCreatorBase<IStopCommand>>().To<StopCommandCommandCreator>().AsSingle();

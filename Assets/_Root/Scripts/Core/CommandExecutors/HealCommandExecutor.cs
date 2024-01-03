@@ -12,7 +12,7 @@ using Utils;
 
 namespace Core.CommandExecutors
 {
-    public partial class AttackCommandExecutor : CommandExecutorBase<IHealCommand>
+    public partial class HealCommandExecutor : CommandExecutorBase<IHealCommand>
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
@@ -31,7 +31,6 @@ namespace Core.CommandExecutors
         private readonly Subject<IAttackable> _attackTargets = new Subject<IAttackable>();
 
         private Transform _targetTransform;
-        private AttackOperation _currentAttackOp;
 
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Attack = Animator.StringToHash("Attack");
@@ -77,34 +76,20 @@ namespace Core.CommandExecutors
         public override async Task ExecuteSpecificCommand(IHealCommand command)
         {
             _targetTransform = (command.Target as Component).transform;
-            _currentAttackOp = new AttackOperation(this, command.Target);
 
             //Update();
 
             _stopCommandExecutor.AttackCancellationTokenSource = new CancellationTokenSource();
 
-            try
-            {
-                await
-                _currentAttackOp.RunWithCancellation(_stopCommandExecutor.AttackCancellationTokenSource.Token);
-            }
-            catch
-            {
-                _currentAttackOp.Cancel();
-            }
 
             _animator.SetTrigger(Idle);
-            _currentAttackOp = null;
             _targetTransform = null;
             _stopCommandExecutor.AttackCancellationTokenSource = null;
         }
 
         private void Update()
         {
-            if (_currentAttackOp == null)
-            {
                 return;
-            }
 
             _ourPosition = transform.position;
             _ourRotation = transform.rotation;
@@ -113,3 +98,4 @@ namespace Core.CommandExecutors
         }
     }
 }
+

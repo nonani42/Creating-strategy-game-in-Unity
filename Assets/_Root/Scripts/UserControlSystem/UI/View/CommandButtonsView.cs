@@ -19,6 +19,7 @@ namespace UserControlSystem
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
         [SerializeField] private GameObject _setRallyButton;
+        [SerializeField] private GameObject _healButton;
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
 
@@ -26,12 +27,13 @@ namespace UserControlSystem
         {
             _buttonsByExecutorType = new Dictionary<Type, GameObject>
             {
-                { typeof(ICommandExecutor<IAttackCommand>), _attackButton },
+                { typeof(ICommandExecutor<IHealCommand>), _attackButton },
                 { typeof(ICommandExecutor<IMoveCommand>), _moveButton },
                 { typeof(ICommandExecutor<IPatrolCommand>), _patrolButton },
                 { typeof(ICommandExecutor<IStopCommand>), _stopButton },
                 { typeof(ICommandExecutor<IProduceUnitCommand>), _produceUnitButton },
-                { typeof(ICommandExecutor<ISetRallyPointCommand>), _setRallyButton }
+                { typeof(ICommandExecutor<ISetRallyPointCommand>), _setRallyButton },
+                { typeof(ICommandExecutor<IHealCommand>), _healButton }
             };
 
             Clear();
@@ -73,6 +75,7 @@ namespace UserControlSystem
             _stopButton.GetComponent<Selectable>().interactable = value;
             _produceUnitButton.GetComponent<Selectable>().interactable = value;
             _setRallyButton.GetComponent<Selectable>().interactable = value;
+            _healButton.GetComponent<Selectable>().interactable = value;
         }
 
         private GameObject GetButtonGameObjectByType(Type executorInstanceType)

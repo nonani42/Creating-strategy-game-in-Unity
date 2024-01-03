@@ -14,11 +14,12 @@ namespace UserControlSystem
         public event Action OnCommandCancel;
 
         [Inject] private CommandCreatorBase<IProduceUnitCommand> _unitProducer;
-        [Inject] private CommandCreatorBase<IAttackCommand> _attacker;
+        [Inject] private CommandCreatorBase<IHealCommand> _attacker;
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
         [Inject] private CommandCreatorBase<ISetRallyPointCommand> _rallySetter;
+        [Inject] private CommandCreatorBase<IHealCommand> _healer;
 
         private bool _commandIsPending;
 
@@ -36,6 +37,9 @@ namespace UserControlSystem
                 ExecuteCommandWrapper(command, commandsQueue));
 
             _attacker.ProcessCommandExecutor(commandExecutor, command =>
+                ExecuteCommandWrapper(command, commandsQueue));
+
+            _healer.ProcessCommandExecutor(commandExecutor, command =>
                 ExecuteCommandWrapper(command, commandsQueue));
 
             _stopper.ProcessCommandExecutor(commandExecutor, command =>

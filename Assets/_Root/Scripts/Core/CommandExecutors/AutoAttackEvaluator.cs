@@ -61,7 +61,7 @@ namespace Core.CommandExecutors
         {
             if (info.CurrentCommand is IMoveCommand)
                 return;
-            if (info.CurrentCommand is IAttackCommand && !(info.CurrentCommand is Command))
+            if (info.CurrentCommand is IHealCommand && !(info.CurrentCommand is Command))
                 return;
 
             var factionInfo = default(FactionMemberParallelInfo);

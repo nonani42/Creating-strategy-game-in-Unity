@@ -1,15 +1,16 @@
 ﻿using Abstractions;
 using Abstractions.Commands.CommandsInterfaces;
 
-namespace Core.CommandExecutors
+namespace UserControlSystem.CommandRealizations
 {
-    public class AutoAttackCommand : IHealCommand
+    public sealed class HealCommand : IHealCommand
     {
         public IAttackable Target { get; }
 
-        public AutoAttackCommand(IAttackable target)
+        public HealCommand(IAttackable target)
         {
             Target = target;
         }
     }
 }
+

@@ -12,7 +12,7 @@ namespace Core.CommandExecutors
     {
         [Inject] CommandExecutorBase<IMoveCommand> _moveCommandExecutor;
         [Inject] CommandExecutorBase<IPatrolCommand> _patrolCommandExecutor;
-        [Inject] CommandExecutorBase<IAttackCommand> _attackCommandExecutor;
+        [Inject] CommandExecutorBase<IHealCommand> _attackCommandExecutor;
         [Inject] CommandExecutorBase<IStopCommand> _stopCommandExecutor;
 
         private ReactiveCollection<ICommand> _innerCollection = new ReactiveCollection<ICommand>();

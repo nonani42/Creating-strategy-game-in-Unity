@@ -5,8 +5,8 @@ using UserControlSystem.CommandRealizations;
 
 namespace UserControlSystem
 {
-    public class AttackCommandCommandCreator : CancellableCommandCreatorBase<IAttackCommand, IAttackable>
+    public class AttackCommandCommandCreator : CancellableCommandCreatorBase<IHealCommand, IAttackable>
     {
-        protected override IAttackCommand CreateCommand(IAttackable argument) => new AttackCommand(argument);
+        protected override IHealCommand CreateCommand(IAttackable argument) => new AttackCommand(argument);
     }
 }

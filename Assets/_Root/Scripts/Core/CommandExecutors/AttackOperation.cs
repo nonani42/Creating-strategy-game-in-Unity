@@ -8,7 +8,7 @@ using Utils;
 
 namespace Core.CommandExecutors
 {
-    public partial class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
+    public partial class AttackCommandExecutor : CommandExecutorBase<IHealCommand>
     {
         public class AttackOperation : IAwaitable<AsyncExtensions.Void>
         {

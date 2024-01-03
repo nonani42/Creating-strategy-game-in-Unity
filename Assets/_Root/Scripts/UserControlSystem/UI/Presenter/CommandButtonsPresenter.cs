@@ -1,7 +1,9 @@
 ﻿using Abstractions;
 using Abstractions.Commands;
+using Abstractions.Commands.CommandsInterfaces;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace UserControlSystem
@@ -13,7 +15,11 @@ namespace UserControlSystem
         [Inject] private ValueBase<ISelectable> _selectable;
         [Inject] private CommandButtonsModel _model;
 
+        [Inject] private ValueBase<Vector3> _groundClicksRMB;
+
+
         private ISelectable _currentSelectable;
+        private Vector3 _currentGround;
 
 
         private void Start()
@@ -26,6 +32,9 @@ namespace UserControlSystem
 
             _selectable.OnNewValue += OnSelected;
             OnSelected(_selectable.CurrentValue);
+
+            _groundClicksRMB.OnNewValue += OnGroundClicked;
+            OnGroundClicked(_groundClicksRMB.CurrentValue);
         }
 
         private void OnSelected(ISelectable selectable)
@@ -47,6 +56,23 @@ namespace UserControlSystem
 
                 var queue = (selectable as Component).GetComponentInParent<ICommandsQueue>();
                 _view.MakeLayout(commandExecutors, queue);
+            }
+        }
+
+        private void OnGroundClicked(Vector3 ground)
+        {
+                if (_currentGround == ground)
+                return;
+
+            if (_currentGround != null)
+                _currentGround = ground;
+
+            if (_currentSelectable != null && ground != null)
+            {
+                var commandExecutor = (_currentSelectable as Component).GetComponentInParent<ICommandExecutor<IMoveCommand>>();
+
+                var queue = (_currentSelectable as Component).GetComponentInParent<ICommandsQueue>();
+                _model.OnCommandButtonClicked(commandExecutor, queue);
             }
         }
     }

@@ -3,7 +3,7 @@ using Abstractions.Commands.CommandsInterfaces;
 
 namespace UserControlSystem.CommandRealizations
 {
-    public sealed class AttackCommand : IAttackCommand
+    public sealed class AttackCommand : IHealCommand
     {
         public IAttackable Target { get; }
 
